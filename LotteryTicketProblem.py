@@ -1,5 +1,4 @@
-lottery_list=[ "1", "42", "100848", "4938532894754", "1234567", "472844278465445", "493349125755", "4933187657",
-"4933187652", "49331876521","0034567812","601234123" , "11223344555758", "11223344112334"]
+lottery_list=[ "1", "42", "100848", "4938532894754", "1234567", "472844278465445"]
 valid_range = range(1,60)
 
 				#Lottery	#Single		#Double  
@@ -118,4 +117,3 @@ for test_str in lottery_list:
 		output = parse_lottery_ticket(test_str,length)
 		if (output!=[]):
 			print "Entry %r is a valid lottery ticket: %r"%(test_str,output)
-
