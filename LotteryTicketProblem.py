@@ -1,4 +1,7 @@
-lottery_list=[ "1", "42", "100848", "4938532894754", "1234567", "472844278465445"]
+lottery_list=[ "1", "42", "100848", "4938532894754", "1234567", "472844278465445",
+"5698157156", "4933187657" ,"4933187652", "49331876521" , "04933176521","12345645231137"]
+
+#lottery_list=["4933187652"]
 valid_range = range(1,60)
 
 				#Lottery	#Single		#Double  
@@ -15,16 +18,14 @@ digit_count_map={
 					14:		(0,			7)
 				}
 
-def is_duplicate_present(arg):
+def is_duplicate_present(x,arg):
 	"""
-	Returns True if a duplicate is present in "arg" list. Else return false
+	Returns True if a duplicate of x is present in "arg" list. Else return false
 	"""
 	arg_cpy=list(arg)
-	for x in arg_cpy:
-		arg_cpy.remove(x)
-		if(x in arg_cpy):
-			return True;
-		arg_cpy=list(arg)
+	arg_cpy.remove(x)
+	if x in arg_cpy:
+		return True
 	return False
 
 
@@ -51,60 +52,171 @@ def parse_lottery_ticket(str,length):
 	dim = digit_count_map[length]
 	single_digit_count = dim[0]
 	double_digit_count = dim[1]
-	index = 0
-	while(index<length):
-		#add 2 digit entry to lottery list if in valid range
-		if(double_digit_count>0):
-			#can we add the next 2 digits to the lottery
-			if int(double_digit_list[index]) in valid_range:
-				lottery_ticket += [double_digit_list[index]]
-				#if unique element,decrement allowable 2-digits and up index by 2
-				if(is_duplicate_present(lottery_ticket)==False):
+	i=0
+	max_length = len(single_digit_list)
+	while(i<max_length):
+		if( (double_digit_count>0) and ((i+1)<max_length) ):
+			entry1 = double_digit_list[i]
+			entry2 = double_digit_list[i+1]
+			#scenario 1
+			if (int(entry1) in valid_range and int(entry2) not in valid_range):
+				if( entry1 not in lottery_ticket):
+					lottery_ticket += [entry1]
 					double_digit_count -= 1
-					index += 2
-				#if duplicate, split double digits into single
+					i += 2
+					print lottery_ticket
 				else:
-					#duplicate entry can't be added,remove it
-					lottery_ticket = [lottery_ticket[i] for i in range(0,len(lottery_ticket)-1)]
-					#Try single digit entry now
-					if ((single_digit_count>0) and (int(single_digit_list[index]) in valid_range)):
-						lottery_ticket += [single_digit_list[index]]
-						if(is_duplicate_present(lottery_ticket)==False):
-							single_digit_count -= 1
-							index += 1
-						#single digit duplicate not allowed. exit
-						else:
-							lottery_ticket = [lottery_ticket[i] for i in range(0,len(lottery_ticket)-1)]
-							break
-					else:
-						break
-			#when double digit is not valid, try splitting it
-			elif ((single_digit_count>0)and (int(single_digit_list[index]) in valid_range)):
-					lottery_ticket += [single_digit_list[index]]
-					if(is_duplicate_present(lottery_ticket)==False):
+					print "Case1a:duplicate of %r not allowed"%(entry1)
+					print lottery_ticket
+					break
+			#scenario 2
+			elif (int(entry1) not in valid_range and int(entry2) in valid_range):
+				if(single_digit_list[i] not in lottery_ticket\
+				and (int(single_digit_list[i]) in valid_range)\
+				and entry2 not in lottery_ticket):
+					if (single_digit_count>0):
+						lottery_ticket += [single_digit_list[i],entry2]
 						single_digit_count -= 1
-						index += 1
-					#single digit duplicate not allowed. exit
+						double_digit_count -= 1
+						i += 3
+						print lottery_ticket
 					else:
-						lottery_ticket = [lottery_ticket[i] for i in range(0,len(lottery_ticket)-1)]
+						print "2a: single digit max reached. cant add %r"%single_digit_list[i]
+						print lottery_ticket
 						break
-			else:
-				break
+				else:
+					print "Case2b: One of  %r or %r is a duplicate"%(single_digit_list[i],entry2)
+					print lottery_ticket
+					break
+			#scenario 3
+			elif (int(entry1) not in valid_range and int(entry2) not in valid_range):	
+				if (single_digit_count>=2):
+					if (single_digit_list[i]  not in lottery_ticket) \
+					and (int(single_digit_list[i]) in valid_range) \
+					and  (single_digit_list[i+1] not in lottery_ticket)\
+					and (int(single_digit_list[i+1]) in valid_range):
+						lottery_ticket += [single_digit_list[i], single_digit_list[i+1]]
+						single_digit_count -= 2
+						i += 2
+						print lottery_ticket
+					else:
+						print "Case3a: Invalid OR Duplicate of %r or %r not allowed"\
+						%(single_digit_list[i],single_digit_list[i+1])
+						print lottery_ticket
+						break
+				else:
+					print "Case 3b:two successive numbers %r %r not in range 59\
+					 can't be split either"%(entry1, entry2)
+					print lottery_ticket
+					break
+			#scenario 4
+			elif (int(entry1) in valid_range and int(entry2) in valid_range):
+				if (i+2) < len(single_digit_list):
+					temp = double_digit_list[i+2]
+					if (int(temp) in valid_range):
+						if (temp not in lottery_ticket):
+							#if temp is last entry with single digit ,
+							# it will still be taken care of here
+							lottery_ticket +=[entry1]
+							double_digit_count -= 1
+							if (double_digit_count>0 or single_digit_count>0):
+								lottery_ticket += [temp]
+								double_digit_count -= 1
+								i += 4
+								print lottery_ticket
+							else:
+								print "Case 4a: out of both single and double digit\
+								 max for entry=%r"%temp
+								print lottery_ticket
+								break
+						else:
+							print"case 4b:This duplicate %r not allowed"%temp
+							print lottery_ticket
+							break
+					elif (int(temp) not in valid_range):
+						if(single_digit_count>0):
+							#Three digits have to be split into a 2digit and 1digit\
+							#..How to split? The last condition need to be checked further
+							if (int(single_digit_list[i]) in valid_range) \
+							and (single_digit_list[i] not in lottery_ticket)\
+							and (entry2 not in lottery_ticket) \
+							and (is_duplicate_present(entry2,double_digit_list)==False):
+								lottery_ticket +=[single_digit_list[i],entry2]
+								double_digit_count -= 1
+								single_digit_count -= 1
+								i += 3
+								print lottery_ticket
+
+							elif (entry1 not in lottery_ticket) \
+							and (int(single_digit_list[i+2]) in valid_range) \
+							and (single_digit_list[i+2] not in lottery_ticket) \
+							and (is_duplicate_present(entry1,double_digit_list)==False):
+								lottery_ticket +=[entry1,single_digit_list[i+2]]
+								double_digit_count -= 1
+								single_digit_count -= 1
+								i += 3
+								print lottery_ticket
+							else:
+								print "Case 4c: Both 2-1 combo have issues"
+								print lottery_ticket
+								break
+						else:
+							print "Case 4b: out of single digit max for entry=%r"%single_digit_list[i]
+							print lottery_ticket
+							break
+				#last pair of entries. It can be one double digit or 2 single digit
+				else:
+					if(double_digit_count>0):
+						if entry1 not in lottery_ticket:
+							lottery_ticket += [entry1]
+							double_digit_count -= 1
+							i += 2
+						#split last two digit and see if you can add
+						else:
+							if (single_digit_count > 1) \
+							and (single_digit_count[i] not in lottery_ticket)\
+							and (int(single_digit_list[i]) in valid_range)\
+							and (single_digit_list[i+1] not in lottery_ticket)\
+							and (int(single_digit_list[i+1]) in valid_range):
+								lottery_ticket += [single_digit_count[i],single_digit_count[i+1]]
+								single_digit_count -= 2
+								i += 2
+							else:
+								print "last pair is invalid"
+								break
+
+					elif (single_digit_count > 1) \
+					and (single_digit_count[i] not in lottery_ticket)\
+					and (int(single_digit_list[i]) in valid_range)\
+					and (single_digit_list[i+1] not in lottery_ticket)\
+					and (int(single_digit_list[i+1]) in valid_range):
+						lottery_ticket += [single_digit_count[i],single_digit_count[i+1]]
+						single_digit_count -= 2
+						i += 2
+					else:
+						print "last pair %r %r can't be added"%(single_digit_list[i],single_digit_list[i+1])
+						break
+
 		#for single-digit-only cases or when out of max double digits allowed
 		else:
-			if((single_digit_count>0) and (int(single_digit_list[index]) in valid_range)):
-				lottery_ticket += [single_digit_list[index]]
-				if(is_duplicate_present(lottery_ticket)==False):
+			if((single_digit_count>0) and (int(single_digit_list[i]) in valid_range)):
+				if single_digit_list[i] not in lottery_ticket:
+					lottery_ticket += [single_digit_list[i]]
 					single_digit_count -= 1
-					index += 1
+					i += 1
+					print lottery_ticket
 				#single digit duplicate not allowed. exit
 				else:
-					lottery_ticket = [lottery_ticket[i] for i in range(0,len(lottery_ticket)-1)]
+					print "Case 5a:Single digit duplicate of %r not allowed"%single_digit_list[i]
+					print lottery_ticket
 					break
 			else:
+				print "Case 5b:Single digit %r maxed out or out of range"%single_digit_list[i]
+				print lottery_ticket
 				break
 	#out of the while loop, check the size of lottery ticket
 	if (len(lottery_ticket)!= 7):
+		print "XXXXXXXXXX"
 		return []
 	else:
 		return lottery_ticket
@@ -117,3 +229,4 @@ for test_str in lottery_list:
 		output = parse_lottery_ticket(test_str,length)
 		if (output!=[]):
 			print "Entry %r is a valid lottery ticket: %r"%(test_str,output)
+			print "------------------------------------------------------------"
