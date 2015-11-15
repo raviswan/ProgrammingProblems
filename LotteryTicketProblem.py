@@ -1,5 +1,6 @@
 lottery_list=[ "1", "42", "100848", "4938532894754", "1234567", "472844278465445",
-"5698157156", "4933187657" ,"4933187652", "49331876521" , "04933176521","12345645231137"]
+"5698157156", "4933187657" ,"4933187652", "49331876521" , "04933176521","12345645231137",
+"46729384758", "9723050761","89761234287619","65729839"]
 
 #lottery_list=["4933187652"]
 valid_range = range(1,60)
@@ -92,16 +93,23 @@ def parse_lottery_ticket(str,length):
 			elif (int(entry1) not in valid_range and int(entry2) not in valid_range):	
 				if (single_digit_count>=2):
 					if (single_digit_list[i]  not in lottery_ticket) \
-					and (int(single_digit_list[i]) in valid_range) \
-					and  (single_digit_list[i+1] not in lottery_ticket)\
-					and (int(single_digit_list[i+1]) in valid_range):
-						lottery_ticket += [single_digit_list[i], single_digit_list[i+1]]
-						single_digit_count -= 2
-						i += 2
-						print lottery_ticket
+					and (int(single_digit_list[i]) in valid_range):
+						lottery_ticket += [single_digit_list[i]]
+						single_digit_count -= 1
+						if (single_digit_list[i+1] not in lottery_ticket)\
+						and (int(single_digit_list[i+1]) in valid_range):
+							lottery_ticket += [single_digit_list[i+1]]
+							single_digit_count -= 1
+							i += 2
+							print lottery_ticket
+						else:
+							print"Case3: single digit duplicate %r %r not allowed"\
+							%(single_digit_list[i],single_digit_list[i+1])
+							print lottery_ticket
+							break
 					else:
-						print "Case3a: Invalid OR Duplicate of %r or %r not allowed"\
-						%(single_digit_list[i],single_digit_list[i+1])
+						print "Case3a: Invalid OR Duplicate of %r not allowed"\
+						%(single_digit_list[i])
 						print lottery_ticket
 						break
 				else:
