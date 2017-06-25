@@ -36,7 +36,7 @@ int CoinCount(int c,int number, int* coinCount,int i){
 }
 
 int main(int argc, char** argv){
-	int input=38;
+	int input=53;
 	int min = input;
 	int coinCount[]={0,0,0,0};
 	int finalCount[]={0,0,0,0};

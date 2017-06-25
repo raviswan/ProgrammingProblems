@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+string& getSubPattern(string& input,size_t& pos){
+	size_t i = pos;
+	size_t found = input.find(input[i],pos+1);
+	vector<char> v;
+	while(found != string::npos){
+		v.push_back(input[i]);
+		i++;
+		found = input.find(input[i],found+1);
+	}
+	std::string str(v.begin(),v.end());
+
+}
+int wordPattern(string pattern,string input){
+	map<char,string> mMap;
+	size_t i = 0;
+	size_t pos = 0;
+	size_t pIndex = 0;
+	string subPattern;
+	while(pIndex < pattern.size()){
+		subPattern = getSubPattern(input,pos);
+		auto it = mMap.find(patten[pIndex]);
+		if 	(it != mMap.end()){
+			if(it->second() != subPattern)
+				return false;
+		}
+		else{
+			mMap[pattern[pIndex]] = subPattern;
+			pIndex++;
+			pos += subPattern.size();
+		}
+	}
+}
