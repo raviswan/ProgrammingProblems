@@ -1,0 +1,31 @@
+Applie interivew:
+
+//The text has to be hidden in the grey image with 0 being baclk an 255 being white  The resulting image can be lossy
+but the text should not be visible. 
+
+1)hide(unint8_t* image, int w, int h, char* text){
+	
+}
+Talk about SIP audio implementation
+
+2) Matrix of mxn: You can only walk right or down. Get to the bottom right corner. Print all paths for it
+
+3) STUN and traversal relay
+
+4) Logger that prints a message only if it's not been seen in the last 10seconds. 
+
+In other words, logger("ram", 1) -- true
+					logger("maha", 3) - true
+					logger("ram", 9) - false
+					logger("ram", 11) - true
+
+5) fetch all ipaddress, and send http messsage, wait for status code, and print the 
+status code with ip address prefixed. This was more a open-ended question 
+
+6) TCP window implementation
+
+SeqNum < (MaxSeqNum-5): discard
+else: keep track of 
+lp - loss of packets
+op: out of order packets
+
