@@ -1,0 +1,12 @@
+1) Explain how you'd establish video conference call between two end points.
+2) How would you design a photo viewer app on the client. Photos are not stored locally. It's stored on cloud like in Facebook
+  - You need to enable offline viewing.
+  - You need to be able to look through albums.
+
+3) Given a set of  X-Y co-ordinates, return k points nearest to the origin! See if you can solve it in O(n)
+4) You are given a matrix filled with 1 and 0s. All the 1s that have left,right,up or down neighbor can be connected together
+to form a cluster. The cell with 1 on all 4 sides is called insideCell. All other cells of a cluster are called outside cell. 
+Return the max outside cell count!
+
+  
+  
