@@ -1,0 +1,15 @@
+1) ## How would you design a heat map of Uber drivers in a given city?
+
+2) You are given a start and a destination node. They can be connected directly or indirectly through a bunch of intermediate 
+nodes. Each pair of nodes has a cost and a duration associated with it. Find the path from start to destination with l
+least cost for a given duration.
+
+3)  Given a number of drivers operating at differnet time slots. 
+  a) Determine how many concurrent drivers are operating in any given interval. 
+  b) Return the interval with max drivers.
+  c) Surge Factor = Number of Riders / Number of Drivers.i.e S= R/D.
+     Assume D>=1, Determine the interval with max surge .( For this consider max of R and max of D separately
+     and compute the surge for each and compare)
+     
+     
+   
