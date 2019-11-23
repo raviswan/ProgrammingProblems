@@ -4,8 +4,24 @@ At AFT:
 is = month, < month , or greater than a month.
 Hint: How would you determine a month. And how would you classify this problem?
 
-2) You are getting a stream of orders that you need to process. Each order has a product id, timestamp. You need to write
+2) You are getting a stream of orders that you need to process. Each order has a <product id, timestamp>. You need to write
  the following:
-  a) void addOrder(prodID, timestamop)
+  a) void addOrder(prodID, timestamp)
   b) list<prodID> getNMostPopularProduct(int N)
-  c) list<prodID> get
+  c) list<prodID> getProductsBetweenTime(startTime, endTime)
+  d) list<prodID> getNProductsBetweenTime(startTime,endTime)
+  Hint: Use heap,hashMap and a multiumap.
+  
+ 3) You are a given a pair of product ids. E.g. <p1,p2>; <p3,p4>; <p5,p6> etc. Products in a given pair belong to a same category.
+ Determine number of categories given a list of pairs.
+ Hint: use graph
+ 
+ 4) Design Uber:
+ 
+5) Behaviorial:
+  a) Time you didnt agree with your manager. How did you solve it?
+  b) One accomplishment you are very proud of.
+  c) How did you measure customer impact when you reduced queueing delay?
+  d) Talk about when you underestimated a task
+ 
+  
