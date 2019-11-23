@@ -1,0 +1,11 @@
+At AFT:
+
+1) A subscription service can only fulfil orders that are more than a  month apart. Write a routine to determine whether the order subsription
+is = month, < month , or greater than a month.
+Hint: How would you determine a month. And how would you classify this problem?
+
+2) You are getting a stream of orders that you need to process. Each order has a product id, timestamp. You need to write
+ the following:
+  a) void addOrder(prodID, timestamop)
+  b) list<prodID> getNMostPopularProduct(int N)
+  c) list<prodID> get
