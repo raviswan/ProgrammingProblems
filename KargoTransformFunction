@@ -1,0 +1,40 @@
+There's an IntFunction that takes integer and returns integer.
+
+You have a transform method, called tranformFunction that takes a type, and returns IntFunction based on the type:
+
+CONSTANT : returns 42 whatever the input be. E.g. f(100) returns 42, f(500) returns 42.
+FIXED_INPUT: E.g. f(x)=x*2; When you can g(1000), it always returns f(x), E.g. f(x))
+FIXED_OFFSET:
+
+
+My solution was incomplete!
+
+
+class IntFunction {
+  int call(int i) {
+    return i;
+   }
+ }
+ 
+ typedef IntFunction iFunc;
+ 
+ 
+ typedef enun {
+  CONSTANT,
+  FIXED_INPUT,
+  FIXED_OFFSET
+  
+ }
+ class FixedInputFunction {
+    iFunc ifunc;
+    
+     incomplete ...
+  }
+  
+  iFunc transformMethod(iFunc inputFunc, tranformType t){
+    if(t==CONSTANT){
+      iFunc ifunc;
+      return iFunc.call(42);
+     }
+    }
+    
